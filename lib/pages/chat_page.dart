@@ -13,6 +13,7 @@ import 'package:vkachat_supa/utils/constants.dart';
 /// Displays chat bubbles as a ListView and TextField to enter new chat.
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
+  final String chat_id = '1';
 
   static Route<void> route() {
     return MaterialPageRoute(
@@ -35,6 +36,7 @@ class _ChatPageState extends State<ChatPage> {
         .from('messages')
         .stream(primaryKey: ['id'])
         .order('created_at')
+        .eq('chat_id', widget.chat_id)
         .map((maps) => maps
             .map((map) => Message.fromMap(map: map, myUserId: myUserId))
             .toList());
@@ -88,7 +90,7 @@ class _ChatPageState extends State<ChatPage> {
                           },
                         ),
                 ),
-                const _MessageBar(),
+                _MessageBar(chat_id: widget.chat_id),
               ],
             );
           } else {
@@ -102,8 +104,10 @@ class _ChatPageState extends State<ChatPage> {
 
 /// Set of widget that contains TextField and Button to submit message
 class _MessageBar extends StatefulWidget {
+  final String chat_id;
   const _MessageBar({
     Key? key,
+    required this.chat_id,
   }) : super(key: key);
 
   @override
@@ -137,7 +141,7 @@ class _MessageBarState extends State<_MessageBar> {
                 ),
               ),
               TextButton(
-                onPressed: () => _submitMessage(),
+                onPressed: () => _submitMessage(widget.chat_id),
                 child: const Text('Send'),
               ),
             ],
@@ -159,7 +163,7 @@ class _MessageBarState extends State<_MessageBar> {
     super.dispose();
   }
 
-  void _submitMessage() async {
+  void _submitMessage(String chat_id) async {
     final text = _textController.text;
     final myUserId = supabase.auth.currentUser!.id;
     if (text.isEmpty) {
@@ -168,6 +172,7 @@ class _MessageBarState extends State<_MessageBar> {
     _textController.clear();
     try {
       await supabase.from('messages').insert({
+        'chat_id': chat_id,
         'profile_id': myUserId,
         'content': text,
       });
