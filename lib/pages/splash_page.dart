@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vkachat_supa/pages/chat_page.dart';
+import 'package:vkachat_supa/pages/home_page.dart';
 import 'package:vkachat_supa/pages/register_page.dart';
 import 'package:vkachat_supa/utils/constants.dart';
 
@@ -28,7 +29,7 @@ class SplashPageState extends State<SplashPage> {
           .pushAndRemoveUntil(RegisterPage.route(), (route) => false);
     } else {
       Navigator.of(context)
-          .pushAndRemoveUntil(ChatPage.route(), (route) => false);
+          .pushAndRemoveUntil(HomePage.route(), (route) => false);
     }
   }
 
