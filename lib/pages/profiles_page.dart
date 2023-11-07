@@ -26,36 +26,42 @@ class _ProfilesPageState extends State<ProfilesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<List<Profile>>(
-        stream: _profilesStream,
-        builder: (BuildContext context, AsyncSnapshot<List<Profile>> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(snapshot.data![index]
-                      .username), // Замените на ваше поле имени пользователя
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChatPage(
-                            personId: snapshot.data![index]
-                                .id), // Замените на вашу страницу чата
-                      ),
+    final myUserId = supabase.auth.currentUser!.id;
+    return SafeArea(
+      child: Scaffold(
+        body: StreamBuilder<List<Profile>>(
+          stream: _profilesStream,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Profile>> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  if (snapshot.data![index].id == myUserId) {
+                    return Container();
+                  } else {
+                    return ListTile(
+                      title: Text(snapshot.data![index].username),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ChatPage(personId: snapshot.data![index].id),
+                          ),
+                        );
+                      },
                     );
-                  },
-                );
-              },
-            );
-          }
-        },
+                  }
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

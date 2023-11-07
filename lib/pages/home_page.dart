@@ -19,8 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Widget> pages = [
-    const ProfilesPage(),
-    const ProfilePage(),
+    ProfilesPage(),
+    ProfilePage(),
   ];
 
   slidePages(int index) {

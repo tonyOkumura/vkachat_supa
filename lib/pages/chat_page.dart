@@ -28,41 +28,16 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  int chat_id = 2;
+  late String chat_id;
   late final Stream<List<Message>> _messagesStream;
   final Map<String, Profile> _profileCache = {};
-  Future<void> initChatId() async {
-    final myUserId = supabase.auth.currentUser!.id;
-    try {
-      final response = await supabase
-          .from('chatroom')
-          .select('id')
-          .or('user_1.eq.${myUserId},user_2.eq.${widget.personId},user_1.eq.${widget.personId},user_2.eq.${myUserId}')
-          .single();
-      print(response);
-      setState(() {
-        chat_id = response['id'];
-      });
-    } catch (e) {
-      // If chat_id not found, create a new one
-      try {
-        final insertResponse = await supabase
-            .from('chatroom')
-            .insert({'user_1': myUserId, 'user_2': widget.personId}).single();
-
-        setState(() {
-          chat_id = insertResponse['id'];
-        });
-      } catch (e) {
-        print('Error occurred while creating a new chat_id: $e');
-      }
-    }
-  }
 
   @override
   void initState() {
     final myUserId = supabase.auth.currentUser!.id;
-    initChatId();
+    chat_id = myUserId.hashCode <= widget.personId.hashCode
+        ? '$myUserId-${widget.personId}'
+        : '${widget.personId}-$myUserId';
 
     _messagesStream = supabase
         .from('messages')
@@ -90,10 +65,10 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Chat')),
-      body: SafeArea(
-        child: StreamBuilder<List<Message>>(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Chat')),
+        body: StreamBuilder<List<Message>>(
           stream: _messagesStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -138,7 +113,7 @@ class _ChatPageState extends State<ChatPage> {
 
 /// Set of widget that contains TextField and Button to submit message
 class _MessageBar extends StatefulWidget {
-  final int chat_id;
+  final String chat_id;
   const _MessageBar({
     Key? key,
     required this.chat_id,
@@ -197,7 +172,7 @@ class _MessageBarState extends State<_MessageBar> {
     super.dispose();
   }
 
-  void _submitMessage(int chat_id) async {
+  void _submitMessage(String chat_id) async {
     final text = _textController.text;
     final myUserId = supabase.auth.currentUser!.id;
     if (text.isEmpty) {
