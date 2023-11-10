@@ -4,7 +4,7 @@ import 'package:vkachat_supa/pages/chat_page.dart';
 import 'package:vkachat_supa/utils/constants.dart';
 
 class ProfilesPage extends StatefulWidget {
-  const ProfilesPage({super.key});
+  const ProfilesPage({Key? key});
 
   @override
   State<ProfilesPage> createState() => _ProfilesPageState();
@@ -36,7 +36,12 @@ class _ProfilesPageState extends State<ProfilesPage> {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                  backgroundColor: Colors.transparent,
+                ),
+              );
             } else {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
@@ -44,23 +49,65 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   if (snapshot.data![index].id == myUserId) {
                     return Container();
                   } else {
-                    return ListTile(
-                      title: Text(snapshot.data![index].username),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ChatPage(personId: snapshot.data![index].id),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 4.0),
+                      child: Card(
+                        elevation: 0.0,
+                        color: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.grey.shade800,
                           ),
-                        );
-                      },
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ListTile(
+                          leading: _buildAvatar(snapshot.data![index]),
+                          title: Text(
+                            snapshot.data![index].username,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color:
+                                  Theme.of(context).textTheme.bodyText1!.color,
+                            ),
+                          ),
+                          subtitle: Text(
+                            snapshot.data![index].description ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                    personId: snapshot.data![index].id),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     );
                   }
                 },
               );
             }
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAvatar(Profile profile) {
+    return CircleAvatar(
+      backgroundColor: Theme.of(context).primaryColor,
+      child: Text(
+        profile.username.substring(0, 2),
+        style: TextStyle(
+          color: Colors.white,
         ),
       ),
     );

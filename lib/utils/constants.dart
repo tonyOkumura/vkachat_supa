@@ -17,33 +17,34 @@ const formPadding = EdgeInsets.symmetric(vertical: 20, horizontal: 16);
 /// Error message to display the user when unexpected error occurs.
 const unexpectedErrorMessage = 'Unexpected error occurred.';
 
-/// Basic theme to change the look and feel of the app
-final appTheme = ThemeData.light().copyWith(
-  primaryColorDark: Colors.orange,
+final darkAppTheme = ThemeData.dark().copyWith(
+  primaryColorDark:
+      Colors.indigo, // Используйте темно-голубой оттенок вместо оранжевого
   appBarTheme: const AppBarTheme(
     elevation: 1,
-    backgroundColor: Colors.white,
-    iconTheme: IconThemeData(color: Colors.black),
+    backgroundColor: Colors.black, // Фон AppBar в теме темный
+    iconTheme: IconThemeData(color: Colors.white), // Цвет иконок белый
     titleTextStyle: TextStyle(
-      color: Colors.black,
+      color: Colors.white, // Цвет текста заголовка белый
       fontSize: 18,
     ),
   ),
-  primaryColor: Colors.orange,
+  primaryColor: Colors.indigo, // Основной цвет темы - темно-голубой
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: Colors.orange,
+      foregroundColor: Colors.indigo, // Цвет текста кнопок темно-голубой
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.orange,
+      foregroundColor:
+          Colors.black, // Цвет текста кнопок поднятого состояния черный
+      backgroundColor: Colors.indigo, // Фон кнопок темно-голубой
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
     floatingLabelStyle: const TextStyle(
-      color: Colors.orange,
+      color: Colors.indigo, // Цвет плавающего заголовка темно-голубой
     ),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
@@ -52,11 +53,11 @@ final appTheme = ThemeData.light().copyWith(
         width: 2,
       ),
     ),
-    focusColor: Colors.orange,
+    focusColor: Colors.indigo, // Цвет фокуса темно-голубой
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: const BorderSide(
-        color: Colors.orange,
+        color: Colors.indigo,
         width: 2,
       ),
     ),
@@ -68,7 +69,7 @@ extension ShowSnackBar on BuildContext {
   /// Displays a basic snackbar
   void showSnackBar({
     required String message,
-    Color backgroundColor = Colors.white,
+    Color backgroundColor = Colors.black, // Фон базового Snackbar темный
   }) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
       content: Text(message),

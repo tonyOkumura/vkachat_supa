@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'My Chat App',
-      theme: appTheme,
+      themeMode: ThemeMode.dark,
+      darkTheme: darkAppTheme,
       home: const SplashPage(),
     );
   }

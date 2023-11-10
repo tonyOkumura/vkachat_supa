@@ -35,20 +35,50 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[currentPage],
-      bottomNavigationBar: GNav(
-          onTabChange: (int index) {
-            slidePages(index);
-          },
-          tabs: [
-            GButton(
-              icon: Icons.chat,
-              text: 'Chat',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context)
+              .bottomAppBarColor, // Используйте цвет BottomAppBar из темы
+          boxShadow: [
+            BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            child: GNav(
+              gap: 8,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              activeColor:
+                  Theme.of(context).primaryColor, // Цвет активного элемента
+              color: Colors.grey, // Цвет неактивных элементов
+              iconSize: 24,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              duration: Duration(milliseconds: 800),
+              tabs: [
+                GButton(
+                  icon: Icons.chat,
+                  text: 'Chat',
+                  activeBorder: Border.all(color: Colors.indigo),
+                  iconActiveColor: Colors.white,
+                  textColor: Colors.white,
+                ),
+                GButton(
+                  icon: Icons.person,
+                  text: 'Profile',
+                  activeBorder: Border.all(color: Colors.indigo),
+                  iconActiveColor: Colors.white,
+                  textColor: Colors.white,
+                ),
+              ],
+              selectedIndex: currentPage,
+              onTabChange: (index) {
+                slidePages(index);
+              },
             ),
-            GButton(
-              icon: Icons.person,
-              text: 'Profile',
-            )
-          ]),
+          ),
+        ),
+      ),
     );
   }
 }

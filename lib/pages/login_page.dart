@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     if (mounted) {
       setState(() {
-        _isLoading = true;
+        _isLoading = false; // Fix: should set isLoading to false
       });
     }
   }
@@ -59,19 +59,33 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           TextFormField(
             controller: _emailController,
-            decoration: const InputDecoration(labelText: 'Email'),
+            decoration: InputDecoration(
+              labelText: 'Email',
+              border: OutlineInputBorder(),
+            ),
             keyboardType: TextInputType.emailAddress,
           ),
           formSpacer,
           TextFormField(
             controller: _passwordController,
-            decoration: const InputDecoration(labelText: 'Password'),
+            decoration: InputDecoration(
+              labelText: 'Password',
+              border: OutlineInputBorder(),
+            ),
             obscureText: true,
           ),
           formSpacer,
           ElevatedButton(
             onPressed: _isLoading ? null : _signIn,
-            child: const Text('Login'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side:
+                    BorderSide(color: Colors.indigo), // Change color as needed
+              ),
+            ),
+            child: const Text('Login', style: TextStyle(color: Colors.indigo)),
           ),
         ],
       ),

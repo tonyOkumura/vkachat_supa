@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:vkachat_supa/pages/chat_page.dart';
 import 'package:vkachat_supa/pages/home_page.dart';
 import 'package:vkachat_supa/pages/login_page.dart';
 import 'package:vkachat_supa/utils/constants.dart';
@@ -22,7 +20,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final bool _isLoading = false;
+  bool _isLoading = false; // Fixed: Changed from 'final' to 'bool'
 
   final _formKey = GlobalKey<FormState>();
 
@@ -40,7 +38,10 @@ class _RegisterPageState extends State<RegisterPage> {
     final username = _usernameController.text;
     try {
       await supabase.auth.signUp(
-          email: email, password: password, data: {'username': username});
+        email: email,
+        password: password,
+        data: {'username': username},
+      );
       Navigator.of(context)
           .pushAndRemoveUntil(HomePage.route(), (route) => false);
     } on AuthException catch (error) {
@@ -63,8 +64,9 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             TextFormField(
               controller: _emailController,
-              decoration: const InputDecoration(
-                label: Text('Email'),
+              decoration: InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {
@@ -78,8 +80,9 @@ class _RegisterPageState extends State<RegisterPage> {
             TextFormField(
               controller: _passwordController,
               obscureText: true,
-              decoration: const InputDecoration(
-                label: Text('Password'),
+              decoration: InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {
@@ -94,8 +97,9 @@ class _RegisterPageState extends State<RegisterPage> {
             formSpacer,
             TextFormField(
               controller: _usernameController,
-              decoration: const InputDecoration(
-                label: Text('Username'),
+              decoration: InputDecoration(
+                labelText: 'Username',
+                border: OutlineInputBorder(),
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {
@@ -111,7 +115,16 @@ class _RegisterPageState extends State<RegisterPage> {
             formSpacer,
             ElevatedButton(
               onPressed: _isLoading ? null : _signUp,
-              child: const Text('Register'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(
+                      color: Colors.indigo), // Change color as needed
+                ),
+              ),
+              child: const Text('Register',
+                  style: TextStyle(color: Colors.indigo)),
             ),
             formSpacer,
             TextButton(
