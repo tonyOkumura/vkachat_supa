@@ -164,9 +164,12 @@ class _MessageBarState extends State<_MessageBar> {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () => _submitMessage(widget.chatId),
-                child: const Text('Send'),
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: TextButton(
+                  onPressed: () => _submitMessage(widget.chatId),
+                  child: const Text('Send'),
+                ),
               ),
             ],
           ),
