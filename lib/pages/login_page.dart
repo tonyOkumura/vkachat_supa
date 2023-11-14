@@ -53,14 +53,14 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign In')),
+      appBar: AppBar(title: const Text('Вход в аккаунт')),
       body: ListView(
         padding: formPadding,
         children: [
           TextFormField(
             controller: _emailController,
             decoration: InputDecoration(
-              labelText: 'Email',
+              labelText: 'Почта',
               border: OutlineInputBorder(),
             ),
             keyboardType: TextInputType.emailAddress,
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
           TextFormField(
             controller: _passwordController,
             decoration: InputDecoration(
-              labelText: 'Password',
+              labelText: 'Пароль',
               border: OutlineInputBorder(),
             ),
             obscureText: true,
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                     BorderSide(color: Colors.indigo), // Change color as needed
               ),
             ),
-            child: const Text('Login', style: TextStyle(color: Colors.indigo)),
+            child: const Text('Войти', style: TextStyle(color: Colors.indigo)),
           ),
         ],
       ),

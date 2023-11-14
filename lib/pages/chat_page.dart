@@ -73,7 +73,9 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Chat')),
+        appBar: AppBar(
+          title: const Text('Чат', style: TextStyle(color: Colors.white)),
+        ),
         body: StreamBuilder<List<Message>>(
           stream: _messagesStream,
           builder: (context, snapshot) {
@@ -85,7 +87,7 @@ class _ChatPageState extends State<ChatPage> {
                     Expanded(
                       child: messages.isEmpty
                           ? const Center(
-                              child: Text('Start your conversation now :)'),
+                              child: Text('начните общение прямо сейчас :)'),
                             )
                           : ListView.builder(
                               reverse: true,
@@ -157,7 +159,7 @@ class _MessageBarState extends State<_MessageBar> {
                   autofocus: true,
                   controller: _textController,
                   decoration: InputDecoration(
-                    hintText: 'Type a message',
+                    hintText: 'Ведите сообщение',
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     contentPadding: const EdgeInsets.all(8),
@@ -168,7 +170,7 @@ class _MessageBarState extends State<_MessageBar> {
                 physics: const BouncingScrollPhysics(),
                 child: TextButton(
                   onPressed: () => _submitMessage(widget.chatId),
-                  child: const Text('Send'),
+                  child: const Text('Отправить'),
                 ),
               ),
             ],

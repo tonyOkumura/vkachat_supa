@@ -58,14 +58,14 @@ class _HomePageState extends State<HomePage> {
               tabs: [
                 GButton(
                   icon: Icons.chat,
-                  text: 'Chat',
+                  text: 'Чаты',
                   activeBorder: Border.all(color: Colors.indigo),
                   iconActiveColor: Colors.white,
                   textColor: Colors.white,
                 ),
                 GButton(
                   icon: Icons.person,
-                  text: 'Profile',
+                  text: 'Профиль',
                   activeBorder: Border.all(color: Colors.indigo),
                   iconActiveColor: Colors.white,
                   textColor: Colors.white,

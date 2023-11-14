@@ -55,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text('Регистрация'),
       ),
       body: Form(
         key: _formKey,
@@ -65,12 +65,12 @@ class _RegisterPageState extends State<RegisterPage> {
             TextFormField(
               controller: _emailController,
               decoration: InputDecoration(
-                labelText: 'Email',
+                labelText: 'Почта',
                 border: OutlineInputBorder(),
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {
-                  return 'Required';
+                  return 'Обязательное поле';
                 }
                 return null;
               },
@@ -81,15 +81,15 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'Пароль',
                 border: OutlineInputBorder(),
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {
-                  return 'Required';
+                  return 'Обязательное поле';
                 }
                 if (val.length < 6) {
-                  return '6 characters minimum';
+                  return '6 символов минимум';
                 }
                 return null;
               },
@@ -98,16 +98,16 @@ class _RegisterPageState extends State<RegisterPage> {
             TextFormField(
               controller: _usernameController,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'Имя пользователя',
                 border: OutlineInputBorder(),
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {
-                  return 'Required';
+                  return 'Обязательное поле';
                 }
                 final isValid = RegExp(r'^[A-Za-z0-9_]{3,24}$').hasMatch(val);
                 if (!isValid) {
-                  return '3-24 long with alphanumeric or underscore';
+                  return 'Недопустимые символы';
                 }
                 return null;
               },
@@ -123,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: Colors.indigo), // Change color as needed
                 ),
               ),
-              child: const Text('Register',
+              child: const Text('Зарегестрироваться',
                   style: TextStyle(color: Colors.indigo)),
             ),
             formSpacer,
@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
               onPressed: () {
                 Navigator.of(context).push(LoginPage.route());
               },
-              child: const Text('I already have an account'),
+              child: const Text('Уже есть аккаунт?'),
             )
           ],
         ),

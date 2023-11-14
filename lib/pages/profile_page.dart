@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Profile profile = snapshot.data!;
           return Scaffold(
             appBar: AppBar(
-              title: Text('Profile Page'),
+              title: Text('Профиль'),
             ),
             body: SingleChildScrollView(
               child: SafeArea(
@@ -62,11 +62,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           backgroundColor: Colors.indigo,
                         ),
                         SizedBox(height: 16),
-                        _buildInfoCard('Username', profile.username),
+                        _buildInfoCard('Никнейм', profile.username),
                         SizedBox(height: 16),
                         _buildEditableInfoCard(
-                          'Description',
-                          profile.description ?? 'No description',
+                          'Описание',
+                          profile.description ?? 'без описания',
                           Icons.edit,
                           () {
                             _startEditing(profile.description);
@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         SizedBox(height: 16),
                         _buildInfoCard(
-                          'Created At',
+                          'Создан',
                           formattedDateTime(profile.createdAt),
                         ),
                         SizedBox(height: 16),
@@ -87,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           );
         } else {
-          return Text('No profile found');
+          return Text('Профиль не найден');
         }
       },
     );
@@ -187,8 +187,16 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.of(context)
             .pushAndRemoveUntil(RegisterPage.route(), (route) => false);
       },
-      icon: Icon(Icons.exit_to_app),
-      label: Text('Log Out'),
+      icon: Icon(
+        Icons.exit_to_app,
+        color: Colors.grey,
+      ),
+      label: Text(
+        'Выйти',
+        style: TextStyle(
+          color: Colors.grey,
+        ),
+      ),
       style: OutlinedButton.styleFrom(
         side: BorderSide(
           color: Colors.grey[700]!, // Темно-серый цвет
@@ -209,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Edit Description'),
+              title: Text('Править Описание'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -219,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       maxLength: 400,
                       maxLines: null,
                       decoration: InputDecoration(
-                        hintText: 'Enter your new description',
+                        hintText: 'Новое описание .....',
                       ),
                     ),
                   ],
@@ -231,14 +239,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.pop(context);
                     _cancelEditing();
                   },
-                  child: Text('Cancel'),
+                  child: Text('выход'),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     _saveDescription();
                   },
-                  child: Text('Save'),
+                  child: Text('сохранить'),
                 ),
               ],
             );
