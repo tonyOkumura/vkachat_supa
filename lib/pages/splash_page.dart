@@ -94,10 +94,10 @@ class SplashPageState extends State<SplashPage>
               builder: (context, child) {
                 return Transform.scale(
                   scale: _iconScaleAnimation.value,
-                  child: Icon(
-                    Icons.message,
-                    size: 150,
-                    color: Colors.blue,
+                  child: Image.asset(
+                    'assets/logo/chat.png', // make sure you have a PNG version of your logo
+                    width: 150,
+                    height: 150,
                   ),
                 );
               },
